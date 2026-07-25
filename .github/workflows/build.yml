@@ -1,0 +1,23 @@
+name: ESP32 CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  firmware:
+
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: pio run
+
+      - name: Upload
+        run: pio run -t upload
+
+      - name: Test Serial
+        run: python3 tests/test_serial.py
